@@ -29,7 +29,7 @@ def stations_by_distance(stations, p):
             raise TypeError('invalid station, station was {}'.format(type(stat)))
 
     #create list of tuples sorted by their haversine distance
-    distances = sorted_by_key([(stat,haversine(p,stat.coord)) for stat in stations],1)
+    distances = sorted_by_key([(stat, haversine(p,stat.coord)) for stat in stations], 1)
     
     #returns the list
     return distances
