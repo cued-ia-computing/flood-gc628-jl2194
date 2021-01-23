@@ -41,3 +41,10 @@ class MonitoringStation:
         
     def is_station(self):
         return True
+    
+    def __lt__(self,other):
+        if self.name < other.name:
+            print(self.name, other.name)
+            return  self
+        print(other.name,self.name)
+        return other

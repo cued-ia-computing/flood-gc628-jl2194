@@ -1,7 +1,7 @@
 """Unit test for the utils module"""
 
 import floodsystem.utils
-
+import pytest
 
 def test_sort():
     """Test sort container by specific index"""
@@ -55,3 +55,23 @@ def test_reverse_sort():
     assert list1[0] == c
     assert list1[1] == a
     assert list1[2] == b
+
+def test_binary_search_highest_lesser():
+    """Test binary search in specific dimension"""
+
+    a = (1, 1, 3)
+    b = (3, 5, 3)
+    c = (5, 2, 3)
+    list0 = (a, b, c)
+
+    # Test search on 1st entry , normal list
+    assert floodsystem.utils.binary_search_highest_lesser(list0,0,4,0,len(list0)) == 1
+
+    # Test search on 2nd entry , invalid list
+    with pytest.raises(ValueError) as e:
+        floodsystem.utils.binary_search_highest_lesser(list0,1,4,0,len(list0))
+    assert "list was not searchable" in str(e)
+
+    # Test search on 3rd entry , duplicated answer
+    assert floodsystem.utils.binary_search_highest_lesser(list0,2,3,0,len(list0)) == 2
+
