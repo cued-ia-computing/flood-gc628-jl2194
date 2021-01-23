@@ -1,4 +1,4 @@
-"""unit tests for geo module"""
+#unit tests for geo module
 from floodsystem.geo import stations_by_distance
 from floodsystem.station import MonitoringStation
 import pytest
@@ -6,7 +6,6 @@ import pytest
 
 def test_stations_by_distance():
     #testing for correct order and value, checked by hand
-    #creating dummy stations
     s_id = "test-s-id"
     m_id = "test-m-id"
     label = "some station"
@@ -17,7 +16,7 @@ def test_stations_by_distance():
     stations.append(MonitoringStation(s_id, m_id, label, (0, -1.5), trange, river, "0,-1.5"))
     stations.append(MonitoringStation(s_id, m_id, label, (1.0, 1.0), trange, river, "1,1"))
 
-    sorted_stations = stations_by_distance(stations,(0.0, 0.0))
+    sorted_stations = stations_by_distance(stations, (0.0, 0.0))
 
     #assert correct order
     assert sorted_stations[0][0].town == "1,0"
@@ -38,3 +37,4 @@ def test_stations_by_distance():
     with pytest.raises(TypeError) as e:
         stations_by_distance("This is an invlaid station", (0.0, 0.0))
     assert "station" in str(e)
+    
