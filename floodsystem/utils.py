@@ -24,6 +24,10 @@ def sorted_by_key(x, i, reverse=False):
 
     # Sort by distance
     def key(element):
+      try:
         return element[i]
+      except Exception:
+        print(element)
+      return None
 
     return sorted(x, key=key, reverse=reverse)
