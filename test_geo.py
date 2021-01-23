@@ -13,6 +13,7 @@ def test_stations_by_distance():
     trange = (-1, 1)
     river = "River X"
 
+
     stations = [MonitoringStation(s_id, m_id, label, (1.0, 0.0), trange, river, "1,0")]
     stations.append(MonitoringStation(s_id, m_id, label, (0, -1.5), trange, river, "0,-1.5"))
     stations.append(MonitoringStation(s_id, m_id, label, (1.0, 1.0), trange, river, "1,1"))
@@ -39,7 +40,7 @@ def test_stations_by_distance():
         stations_by_distance("This is an invlaid station", (0.0, 0.0))
     assert "station" in str(e)
 
-def test_stations_by_distance():
+def stations_within_radius():
     s_id = "test-s-id"
     m_id = "test-m-id"
     label = "some station"
@@ -78,8 +79,3 @@ def test_stations_by_distance():
     with pytest.raises(TypeError) as e:
         stations_within_radius(stations, (0.0, 0.0), 100)
     assert "station" in str(e)
-
-
-if __name__ == "__main__":
-    print("*** Task 1C: CUED Part IA Flood Warning System ***")
-    test_stations_by_distance()
