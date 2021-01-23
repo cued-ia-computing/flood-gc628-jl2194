@@ -6,7 +6,6 @@ import pytest
 
 def test_sort():
     """Test sort container by specific index"""
-
     a = (10, 3, 3)
     b = (5, 1, -1)
     c = (1, -3, 4)

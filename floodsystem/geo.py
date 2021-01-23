@@ -8,7 +8,7 @@ geographical data.
 
 from .utils import sorted_by_key  # noqa
 from .utils import binary_search_highest_lesser
-from haversine import haversine, Unit
+from haversine import haversine
 
 def stations_by_distance(stations, p):
     """Returns the stations list sorted by their great-circle distance
@@ -17,6 +17,7 @@ def stations_by_distance(stations, p):
     stations should be a list of MonitoringStation
     objects
     """
+
 
     # make sure that p is valid
     # checing p type and length, and values type and range
@@ -34,6 +35,7 @@ def stations_by_distance(stations, p):
     
     # returns the list
     return distances
+
 
 def stations_within_radius(stations, centre, r):
     """Returns the stations that are within rkm from the coordinate centre
@@ -58,4 +60,3 @@ def stations_within_radius(stations, centre, r):
     index = binary_search_highest_lesser(sorted_stations,1,r,0,len(sorted_stations))+1
 
     return [stat[0] for stat in sorted_stations[:index]]
-
