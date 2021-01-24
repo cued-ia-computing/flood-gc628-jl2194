@@ -65,10 +65,10 @@ def test_inconsistent_typical_range_stations():
     stations = [MonitoringStation(s_id, m_id, label, coord, (0, 1), river, town)]
 
     # normal operation
-    assert len(inconsistent_typical_range_stations(stations)) == 1
+    assert len(inconsistent_typical_range_stations(stations)) == 0
 
     stations.append(MonitoringStation(s_id, m_id, label, coord, None, river, town))
     stations.append(MonitoringStation(s_id, m_id, label, coord, (1, 0), river, town))
 
     # invalid excluded
-    assert len(inconsistent_typical_range_stations(stations)) == 1
+    assert len(inconsistent_typical_range_stations(stations)) == 2
