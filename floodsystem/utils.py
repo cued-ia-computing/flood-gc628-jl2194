@@ -42,9 +42,9 @@ def binary_search_highest_lesser(items,dimension,value,start,end):
   end - int end index
   """
 
-  #returning found value
+  # returning found value
   if start + 1 == end:
-    if end < len(items) - 1 and items[end][dimension] > items[end+1][dimension]:
+    if end < len(items) - 1 and items[end][dimension] > items[end + 1][dimension]:
       raise ValueError('list was not searchable')
 
     # dealing with 1 off errors
@@ -57,7 +57,7 @@ def binary_search_highest_lesser(items,dimension,value,start,end):
     raise ValueError('start index was higher than end index')
 
   # choose new pivot point
-  mid = (start+end) // 2
+  mid = (start + end) // 2
 
   # this ensures that duplicates are dealt with correctly
   if value == items[mid][dimension]:

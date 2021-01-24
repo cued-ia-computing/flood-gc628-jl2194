@@ -5,6 +5,10 @@
 for manipulating/modifying station data
 
 """
+def inconsistent_typical_range_stations(stations):
+    """ this takes a list of MonitoringStations and returns
+    a sub list of those stations with invalid typical ranges"""
+    return [stat for stat in stations if stat.typical_range_consistent() == False]
 
 
 class MonitoringStation:
@@ -38,13 +42,21 @@ class MonitoringStation:
         d += "   river:         {}\n".format(self.river)
         d += "   typical range: {}".format(self.typical_range)
         return d
-        
+
     def is_station(self):
+        """ this is used to check if an object is a MoniteringStation"""
         return True
-    
+
     def __lt__(self,other):
+        """ this makes the class sortable"""
         if self.name < other.name:
             print(self.name, other.name)
             return  self
-        print(other.name,self.name)
+        print(other.name, self.name)
         return other
+
+    def typical_range_consistent(self):
+        """this returns true if the objects typical range is valid"""
+        if self.typical_range == None or self.typical_range[0] > self.typical_range[1]:
+            return False
+        return True
