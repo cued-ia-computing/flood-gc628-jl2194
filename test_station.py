@@ -38,19 +38,19 @@ def test_typical_range_consistent():
 
     # test for missing data
     s = MonitoringStation(s_id, m_id, label, coord, None, river, town)
-    assert s.typical_range_consistent() == False
+    assert s.typical_range_consistent() is False
 
     # test for valid data
-    s = MonitoringStation(s_id, m_id, label, coord, (0,1), river, town)
-    assert s.typical_range_consistent() == True
+    s = MonitoringStation(s_id, m_id, label, coord, (0, 1), river, town)
+    assert s.typical_range_consistent()
 
     # test for equall values
-    s = MonitoringStation(s_id, m_id, label, coord, (1,1), river, town)
-    assert s.typical_range_consistent() == True
+    s = MonitoringStation(s_id, m_id, label, coord, (1, 1), river, town)
+    assert s.typical_range_consistent()
 
     # test for invalid data
-     s = MonitoringStation(s_id, m_id, label, coord, (1,0), river, town)
-    assert s.typical_range_consistent() == False
+    s = MonitoringStation(s_id, m_id, label, coord, (1, 0), river, town)
+    assert s.typical_range_consistent() is False
 
 
 def test_inconsistent_typical_range_stations:
@@ -61,15 +61,13 @@ def test_inconsistent_typical_range_stations:
     coord = (-2.0, 4.0)
     river = "River X"
     town = "My Town"
-    stations = [MonitoringStation(s_id, m_id, label, coord, (0,1), river, town)]
+    stations = [MonitoringStation(s_id, m_id, label, coord, (0, 1), river, town)]
 
     # normal operation
     assert len(inconsistent_typical_range_stations(stations)) == 1
 
     stations.append(MonitoringStation(s_id, m_id, label, coord, None, river, town))
-    stations.append(MonitoringStation(s_id, m_id, label, coord, (1,0), river, town))
+    stations.append(MonitoringStation(s_id, m_id, label, coord, (1, 0), river, town))
 
     # invalid excluded
     assert len(inconsistent_typical_range_stations(stations)) == 1
-
-
