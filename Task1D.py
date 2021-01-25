@@ -1,48 +1,12 @@
-# from floodsystem.geo import rivers_with_station, stations_by_river
+from floodsystem.geo import rivers_with_station, stations_by_river
 from floodsystem.stationdata import build_station_list
-
-
-# geo.py start
-
-
-def rivers_with_station(stations):
-
-    """
-    given a list of station objects
-    returns a list/tuple/set with the names of the rivers with a monitoring station.
-    """
-
-    temp = []
-    for n in stations:
-        temp.append(n.river)
-    rivers = set(temp)
-    return rivers
-
-
-def stations_by_river(stations):
-
-    """
-    returns a Python dict that maps river names (the ‘key’) to a list of station objects on a given river.
-    """
-
-    river_stations = {}
-    for n in stations:
-        if n.river in river_stations:
-            river_stations[n.river].append(n.name)
-        else:
-            # can river be empty??
-            river_stations[n.river] = [n.name]
-    return river_stations
-
-
-# geo.py end
 
 
 def run():
     """ Requirements for Task 1D"""
 
     # (1/2)
-    # build list of stations (?)
+    # build list of stations
     stations = build_station_list()
 
     # build list of rivers
