@@ -75,3 +75,10 @@ def test_binary_search_highest_lesser():
 
     # Test search on 3rd entry , duplicated answer
     assert floodsystem.utils.binary_search_highest_lesser(list0, 2, 3, 0, len(list0)) == 2
+
+def test_haversine():
+    """ Tests that haversine gives the correct values"""
+    # caculated using online tool and caculator
+    assert floodsystem.utils.haversine((1.0, 0.0), (1.0, 1.0)) == 111.17814425440771
+    assert floodsystem.utils.haversine((0.0 , 0.0), (0.0, 1.0)) == 111.1950802335329
+    
