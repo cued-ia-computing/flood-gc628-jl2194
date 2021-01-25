@@ -8,7 +8,7 @@ geographical data.
 
 from .utils import sorted_by_key  # noqa
 from .utils import binary_search_highest_lesser
-from haversine import haversine
+from .utils import haversine
 
 
 def stations_by_distance(stations, p):
