@@ -14,7 +14,7 @@ def test_stations_by_distance():
     river = "River X"
 
     stations = [MonitoringStation(s_id, m_id, label, (1.0, 0.0), trange, river, "1,0")]
-    stations.append(MonitoringStation(s_id, m_id, label, (0, -1.5), trange, river, "0,-1.5"))
+    stations.append(MonitoringStation(s_id, m_id, label, (0.0, -1.5), trange, river, "0,-1.5"))
     stations.append(MonitoringStation(s_id, m_id, label, (1.0, 1.0), trange, river, "1,1"))
 
     sorted_stations = stations_by_distance(stations, (0.0, 0.0))

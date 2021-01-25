@@ -74,7 +74,7 @@ def binary_search_highest_lesser(items,dimension,value,start,end):
 def haversine(start,end):
   """this impliments the haversine formula, which calculates the great circle distance
   between 2 points
-  start and end should be (float/int,float/int)
+  start and end should be (float,float)
   """
   # r2 = twice the radius of the earth
   r2 = 2 * 6371.0088
@@ -88,7 +88,7 @@ def haversine(start,end):
     raise TypeError('One of the points is the wrong type start = {} , end = {}'.format(start,end))
 
   # making sure that types are valid
-  if type(start[0]) != float and type(start[0]) != int:
+  if type(start[0]) != float:
     raise TypeError('One of the points is the wrong type start = {} , end = {}'.format(start,end))
 
   # converting lat , long into radians
