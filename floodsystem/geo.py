@@ -81,6 +81,8 @@ def rivers_with_station(stations):
     """
 
     temp = []
+
+    # add all rivers to the list
     for n in stations:
         temp.append(n.river)
     rivers = set(temp)
@@ -94,11 +96,15 @@ def stations_by_river(stations):
     """
 
     river_stations = {}
+
+    # iterate over stations
     for n in stations:
+
+        # add river to the list if the station key exists
         if n.river in river_stations:
             river_stations[n.river].append(n.name)
+        # add a key for the station if does not exist
         else:
-            # can river be empty??
             river_stations[n.river] = [n.name]
     return river_stations
 
@@ -114,6 +120,10 @@ def rivers_by_station_number(stations, N):
     riverstation_dict = stations_by_river(stations)
     riverstation_number = []
 
+    # N cannot be larger than number of rivers
+    if type(N) != int or N >= len(rivers_with_station(stations)):
+        raise ValueError("The value entered for river number is not valid.")
+
     # iterate over keys (rivers), unordered list created
     for n in riverstation_dict:
         riverstation_number.append((n, len(riverstation_dict[n])))
@@ -122,7 +132,7 @@ def rivers_by_station_number(stations, N):
     riverstation_number.sort(key=lambda river: river[1], reverse=True)
 
     # get the Nth value of number of stations
-    n_value = riverstation_number[N][1]
+    n_value = riverstation_number[N - 1][1]
 
     # include all >= Nth value tuples in the list
     result = []
