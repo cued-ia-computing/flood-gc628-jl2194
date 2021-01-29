@@ -47,3 +47,4 @@ jobs:
           python Task2A.py
           python Task2D.py
           python Task2E.py
+          python Task2F.py
