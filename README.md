@@ -6,5 +6,3 @@ Engineering, University of Cambridge.
 The activity is documented at
 https://cued-partia-flood-warning.readthedocs.io/. Fork this repository
 to start the activity.
-
-this is a test to see if this works
