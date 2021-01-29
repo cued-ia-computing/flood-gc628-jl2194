@@ -17,7 +17,7 @@ def run():
     sorted_stations = stations_by_distance(stations, (52.095211, -1.946930))
 
     dt = 10
-    station_no = 5
+    station_no = 6
     dates = []
     levels = []
     
