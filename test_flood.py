@@ -63,5 +63,5 @@ def test_stations_highest_rel_level():
     # check the correctness of returned list
     level_list = stations_highest_rel_level(stations, 2)
     assert len(level_list) == 2
-    assert level_list[0][1] == 1
-    assert level_list[1][1] == 0.75
+    assert level_list[0].relative_water_level() == 1
+    assert level_list[1].relative_water_level() == 0.75

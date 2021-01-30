@@ -15,7 +15,7 @@ def run():
 
     # Print station and water level
     for n in range(len(result)):
-        print(str(result[n][0].name) + " " + str(result[n][1]))
+        print(str(result[n].name) + " " + str(result[n].relative_water_level()))
 
 
 if __name__ == "__main__":

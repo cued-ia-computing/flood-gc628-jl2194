@@ -42,6 +42,10 @@ def stations_highest_rel_level(stations, N):
 
     # sort and keep the top N
     level_list.sort(key=lambda level: level[1], reverse=True)
-    new_level_list = level_list[0:N]
+
+    new_level_list = []
+
+    for n in range(N):
+        new_level_list.append(level_list[n][0])
 
     return new_level_list
