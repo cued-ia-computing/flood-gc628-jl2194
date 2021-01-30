@@ -72,3 +72,33 @@ def test_inconsistent_typical_range_stations():
 
     # invalid excluded
     assert len(inconsistent_typical_range_stations(stations)) == 2
+
+
+def test_relative_water_level():
+    # Create a station
+    s_id = "test-s-id"
+    m_id = "test-m-id"
+    label = "some station"
+    coord = "some coordinate"
+    trange = "some range"
+    river = "River X"
+    town = "some town"
+    latest_level = "some level"
+
+    # test for invalid data
+    s = MonitoringStation(s_id, m_id, label, coord, None, river, town)
+    s.latest_level = latest_level
+    assert s.relative_water_level() == None
+
+    s = MonitoringStation(s_id, m_id, label, coord, (0, 1), river, town)
+    s.latest_level = None
+    assert s.relative_water_level() == None
+
+    # test for correct value
+    s = MonitoringStation(s_id, m_id, label, coord, (0, 1), river, town)
+    s.latest_level = 0.5
+    assert s.relative_water_level() == 0.5
+
+    s = MonitoringStation(s_id, m_id, label, coord, (4, 8), river, town)
+    s.latest_level = 7
+    assert s.relative_water_level() == 0.75

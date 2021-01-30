@@ -5,8 +5,10 @@
 for manipulating/modifying station data
 
 """
+
+
 def inconsistent_typical_range_stations(stations):
-    """ this takes a list of MonitoringStations and returns
+    """this takes a list of MonitoringStations and returns
     a sub list of those stations with invalid typical ranges"""
     return [stat for stat in stations if stat.typical_range_consistent() == False]
 
@@ -14,8 +16,9 @@ def inconsistent_typical_range_stations(stations):
 class MonitoringStation:
     """This class represents a river level monitoring station"""
 
-    def __init__(self, station_id, measure_id, label, coord, typical_range,
-                 river, town):
+    def __init__(
+        self, station_id, measure_id, label, coord, typical_range, river, town
+    ):
 
         self.station_id = station_id
         self.measure_id = measure_id
@@ -47,11 +50,11 @@ class MonitoringStation:
         """ this is used to check if an object is a MoniteringStation"""
         return True
 
-    def __lt__(self,other):
+    def __lt__(self, other):
         """ this makes the class sortable"""
         if self.name < other.name:
             print(self.name, other.name)
-            return  self
+            return self
         print(other.name, self.name)
         return other
 
@@ -60,3 +63,21 @@ class MonitoringStation:
         if self.typical_range == None or self.typical_range[0] > self.typical_range[1]:
             return False
         return True
+
+    # for 2B
+    def relative_water_level(self):
+        """
+        returns the latest water level as a fraction of the typical range
+        i.e. a ratio of 1.0 corresponds to a level at the typical high and a ratio of 0.0 corresponds to a level at the typical low.
+        If the necessary data is not available or is inconsistent, the function should return None.
+        """
+        # return None if data invalid
+        if self.typical_range_consistent() == False or self.latest_level == None:
+            return None
+
+        # (lastest level - low)/(high - low)
+        relative_wl = (self.latest_level - self.typical_range[0]) / (
+            self.typical_range[1] - self.typical_range[0]
+        )
+
+        return relative_wl
