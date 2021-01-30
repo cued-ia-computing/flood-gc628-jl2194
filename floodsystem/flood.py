@@ -25,3 +25,23 @@ def stations_level_over_threshold(stations, tol):
     level_list.sort(key=lambda level: level[1], reverse=True)
 
     return level_list
+
+
+def stations_highest_rel_level(stations, N):
+    """"""
+    # create an empty list
+    level_list = []
+
+    # iterate over the stations
+    for station in stations:
+        level = station.relative_water_level()
+
+        # append (station object, level)
+        if level != None:
+            level_list.append((station, level))
+
+    # sort and keep the top N
+    level_list.sort(key=lambda level: level[1], reverse=True)
+    new_level_list = level_list[0:N]
+
+    return new_level_list
