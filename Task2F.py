@@ -11,6 +11,9 @@ def run():
     # Build list of stations
     stations = build_station_list()
 
+    # update water levels
+    update_water_levels(stations)
+
     dt = 2
     station_no = 5
     dates = []

@@ -7,6 +7,9 @@ def run():
     # Build list of stations
     stations = build_station_list()
 
+    # update water levels
+    update_water_levels(stations)
+
     # return a list of stations with water level over 0.8
     result = stations_level_over_threshold(stations, 0.8)
 

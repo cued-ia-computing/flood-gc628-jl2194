@@ -7,6 +7,9 @@ def run():
     # Build list of stations
     stations = build_station_list()
 
+    # update water levels
+    update_water_levels(stations)
+
     # return a list of top 10 water level stations
     result = stations_highest_rel_level(stations, 10)
 
