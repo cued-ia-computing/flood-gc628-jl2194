@@ -3,6 +3,8 @@ import matplotlib
 from datetime import datetime, timedelta
 from floodsystem.analysis import polyfit
 from floodsystem.analysis import cure_levels
+from matplotlib.dates import date2num as date2num
+from matplotlib.dates import num2date as num2date
 """This module contains a collection of functions related to
 plotting data.
 
@@ -24,9 +26,7 @@ def plot_data(axes, stations, dates, levels):
 
     return axes
 
-
-
-def plot_water_levels(stations, dates, levels):
+def plot_water_levels(stations, dates, levels, fit = False, p = 0):
     import matplotlib.pyplot as plt
     """ plots a water levels against dates for an arbitary amount of stations
     stations is a list of stations
@@ -52,16 +52,28 @@ def plot_water_levels(stations, dates, levels):
         # set up subplots
         fig , axs = plt.subplots(height, length, sharex = True, sharey = True)
 
+        #if fits are needed generate all fits
+        if fit:
+            polys = []
+            for i in range(len(stations)):
+                try:
+                    polys.append(polyfit(num2date(date2num(dates[i]) - date2num(datetime.today())),levels[i],p))
+                except Exception as e:
+                    raise e
 
         #for all stations
-        for x in range(0,height):
-            for y in range(0,length):
+        for x in range(height):
+            for y in range(length):
                 # special case for prime numbers
                 if length == 1:
                     axs[x]=plot_data(axs[x],stations[x],dates[x],levels[x])
+                    if fit:
+                        axs[x].plot(dates[x],polys[x](date2num(dates[x]) - date2num(datetime.today())),color = 'k')
                 else:
                     # non prime and non 1 numbers
                     axs[x, y] = plot_data(axs[x, y], stations[(length * x) + y], dates[(length * x) + y], levels[(length * x) + y])
+                    if fit:
+                        axs[x, y].plot(dates[(length * x) + y],polys[(length * x) + y](date2num(dates[(length * x) + y]) - date2num(datetime.today())),color = 'k')
         
         # changing lables
         for ax in axs.flat:
@@ -69,9 +81,7 @@ def plot_water_levels(stations, dates, levels):
             for tick in ax.get_xticklabels():
                 tick.set_rotation(45)
             ax.label_outer()
-
         plt.show()
-
         return axs
     else:
         #1 is a special case as it leads to non indexiable subplots if handled normally
@@ -84,19 +94,28 @@ def plot_water_levels(stations, dates, levels):
         if stations.is_station():
             #plotting the actuall data
             plt.scatter(dates,cure_levels(levels))
-            
             plt.hlines(stations.typical_range, dates[0], dates[len(dates)-1], ['g','r'])
+
+            #adding fit if needed
+            if fit:
+                try:
+                    poly = polyfit(num2date(date2num(dates) - date2num(datetime.today())),levels,p)
+                except Exception as e:
+                    raise e
+                plt.plot(dates,poly(date2num(dates) - date2num(datetime.today())),color = 'k')
+
+
             # adding title and displaying
             plt.title("{} water levels over time".format(stations.name))
             plt.xlabel('date')
             plt.ylabel('water level (m)')
-            plt.xticks(rotation=45) 
-            plt.show()
-            return
+            plt.xticks(rotation=45)
+            plt.show() 
+            return plt
 
     raise TypeError('station was not a station, station was a {}'.format(type(stations)))
 
-def plot_water_levels_with_fit(station, dates, levels, p):
+def plot_water_levels_with_fit(stations, dates, levels, p):
     import matplotlib.pyplot as plt
     """plots the water level of 1 station over time, along side a line of best fit
     station should be a station
@@ -104,27 +123,8 @@ def plot_water_levels_with_fit(station, dates, levels, p):
     level should be a list of floats
     p should be an int
     """
-    #this validates all of the values and gets the best fit
     try:
-        poly = polyfit(dates,levels,p)
+        axs = plot_water_levels(stations, dates, levels, True, p)
     except Exception as e:
         raise e
-    if station.is_station() == False:
-        raise TypeError('station was not a station, it was a'.format(type(station)))
 
-    #plotting the actuall data
-    plt.scatter(dates,cure_levels(levels))
-    plt.plot(dates,poly(matplotlib.dates.date2num(dates)))
-    plt.hlines(station.typical_range, dates[0], dates[len(dates)-1], ['g','r'])
-    # adding title and displaying
-    plt.title("{} water levels over time".format(station.name))
-    plt.xlabel('date')
-    plt.ylabel('water level (m)')
-    plt.xticks(rotation=45) 
-    plt.show()
-
-    return
-
-
-
-    

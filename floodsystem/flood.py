@@ -1,4 +1,5 @@
 from .station import MonitoringStation
+from .stationdata import  update_water_levels
 
 
 def stations_level_over_threshold(stations, tol):
@@ -9,6 +10,8 @@ def stations_level_over_threshold(stations, tol):
     (ii) the relative water level at the station.
     The returned list should be sorted by the relative level in descending order.
     """
+    # update water levels
+    update_water_levels(stations)
 
     # create an empty list
     level_list = []
@@ -28,7 +31,14 @@ def stations_level_over_threshold(stations, tol):
 
 
 def stations_highest_rel_level(stations, N):
-    """"""
+    """
+    returns a list of stations
+    The returned list shopuld be sorted by the relative level in descending order
+    and of lenth N
+    """
+    # update water levels
+    update_water_levels(stations)
+
     # create an empty list
     level_list = []
 

@@ -1,4 +1,4 @@
-from floodsystem.stationdata import build_station_list, update_water_levels
+from floodsystem.stationdata import build_station_list
 from floodsystem.flood import stations_level_over_threshold
 
 
@@ -6,9 +6,6 @@ def run():
 
     # Build list of stations
     stations = build_station_list()
-
-    # Update latest level data for all stations
-    update_water_levels(stations)
 
     # return a list of stations with water level over 0.8
     result = stations_level_over_threshold(stations, 0.8)

@@ -29,6 +29,7 @@ def polyfit(dates, levels, p):
     #ensure data is of correct type
     if type(p) != int or type(dates) != list or type(levels) != list:
         raise TypeError('variable of wrong type, p={}, dates={}, levels={}'.format(type(p),type(dates),type(levels)))
+
     if type(dates[0]) != datetime.datetime:
         raise TypeError('dates were of wrong type dates={}'.format(type(dates)))
     levels = cure_levels(levels)
