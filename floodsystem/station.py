@@ -17,7 +17,7 @@ class MonitoringStation:
     """This class represents a river level monitoring station"""
 
     def __init__(
-        self, station_id, measure_id, label, coord, typical_range, river, town
+        self, station_id, measure_id, label, coord, typical_range, river, town, highest_ratio
     ):
 
         self.station_id = station_id
@@ -33,6 +33,7 @@ class MonitoringStation:
         self.typical_range = typical_range
         self.river = river
         self.town = town
+        self.highest_ratio = None
 
         self.latest_level = None
 

@@ -3,6 +3,10 @@
 import numpy as np
 import matplotlib
 import datetime
+from datetime import datetime, timedelta
+from .datafetcher import fetch_measure_levels
+from matplotlib.dates import date2num as date2num
+from matplotlib.dates import num2date as num2date
 
 def cure_levels(levels):
     """this fixes any issues with level data
@@ -30,7 +34,7 @@ def polyfit(dates, levels, p):
     if type(p) != int or type(dates) != list or type(levels) != list:
         raise TypeError('variable of wrong type, p={}, dates={}, levels={}'.format(type(p),type(dates),type(levels)))
 
-    if type(dates[0]) != datetime.datetime:
+    if type(dates[0]) != datetime:
         raise TypeError('dates were of wrong type dates={}'.format(type(dates)))
     levels = cure_levels(levels)
 
@@ -44,3 +48,59 @@ def polyfit(dates, levels, p):
         return np.poly1d(np.polyfit(matplotlib.dates.date2num(dates),levels,p))
     except Exception as e:
         raise e
+
+
+def eval_risk(stations, threshholds, n = 3,):
+    """returns 3 lists of stations based on their risk factors
+        stations = list of station datas
+        thresholds = list of values used to sort stations into risk factors
+    """
+
+    PastDt = 10
+    FutureDt = 3
+
+    for stat in stations:
+        #gets data for time period
+        temp = fetch_measure_levels(stat.measure_id, dt=timedelta(days=PastDt))
+
+        #if no data exsists
+        #this is needed because the code to get water levels
+        #uses the last level which might not be in the dt timeframe
+        if len(temp[0]) == 0:
+            print("{} station had no data, checking next".format(stat.name))
+            continue
+
+        #storing data
+        dates = temp[0]
+        levels = temp[1]
+
+        #computes the polyfit and its derivitive
+        waterLevel = polyfit(num2date(date2num(dates) - date2num(datetime.today())), levels , n)
+
+        waterChange = np.polynomial.polynomial.polyder(waterLevel)
+
+        #this gets rid of complex roots
+        roots = np.polynomial.polynomial.polyroots(waterChange)
+        curedRoots = []
+
+        for root in roots:
+            if type(root) != np.complex128 or root.imag == 0.0:
+                if type(root) == np.complex128:
+                    root = root.real
+                
+                #make sure root is in range
+                if root > 0 and root < FutureDt:
+                    curedRoots.append(root)
+
+        #default value is the current one or the last one
+        highestLevel = waterLevel(0)
+        highestLevel = max(highestLevel,waterLevel(FutureDt))
+
+        for root in curedRoots:
+            highestLevel = max(highestLevel,waterLevel(root))
+        
+        #convert highest level into ratio
+        stat.highestRatio = (highestLevel - stat.typical_range[0]) / (stat.typical_range[1] - stat.typical_range[0])
+
+    return
+

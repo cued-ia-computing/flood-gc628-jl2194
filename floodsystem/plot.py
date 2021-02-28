@@ -100,6 +100,7 @@ def plot_water_levels(stations, dates, levels, fit = False, p = 0):
             if fit:
                 try:
                     poly = polyfit(num2date(date2num(dates) - date2num(datetime.today())),levels,p)
+                    print(poly)
                 except Exception as e:
                     raise e
                 plt.plot(dates,poly(date2num(dates) - date2num(datetime.today())),color = 'k')
