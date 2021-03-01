@@ -35,6 +35,8 @@ class MonitoringStation:
         self.town = town
         self.highest_ratio = 0
 
+        self.latest_level =  None
+
     def __repr__(self):
         d = "Station name:     {}\n".format(self.name)
         d += "   id:            {}\n".format(self.station_id)
