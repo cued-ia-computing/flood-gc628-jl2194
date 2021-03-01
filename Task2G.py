@@ -29,13 +29,11 @@ def run():
     
 
     count = 0
-    
+
     for i in range(len(towns)):
         eval_risk(town_stations[i])
         count += len(town_stations[i])
-        print("{} / {} towns done, {} / {} stations done".format(i, len(towns), count, len(stations)))
-            
-    
+        print("{} / {} towns done, {} / {} stations done".format(i, len(towns), count, len(stations)))    
 
 
 if __name__ == "__main__":

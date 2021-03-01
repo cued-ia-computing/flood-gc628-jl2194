@@ -55,13 +55,13 @@ def polyfit(dates, levels, p):
         raise e
 
 
-def eval_risk(stations,  n = 3,):
+def eval_risk(stations,  n = 3):
     """returns 3 lists of stations based on their risk factors
         stations = list of station datas
         thresholds = list of values used to sort stations into risk factors
     """
 
-    PastDt = 10
+    PastDt = 5
     FutureDt = 3
 
     for stat in stations:
@@ -109,9 +109,8 @@ def eval_risk(stations,  n = 3,):
 
         for root in curedRoots:
             highestLevel = max(highestLevel,waterLevel(root))
-        
-        #convert highest level into ratio
-        stat.highestRatio = (highestLevel - stat.typical_range[0]) / (stat.typical_range[1] - stat.typical_range[0])
 
+        #convert highest level into ratio
+        stat.set_highest_ratio((highestLevel - stat.typical_range[0]) / (stat.typical_range[1] - stat.typical_range[0]))
     return
 

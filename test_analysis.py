@@ -1,6 +1,7 @@
 """unit tests for analysis submodule"""
 from floodsystem.analysis import polyfit
 from floodsystem.analysis import cure_levels
+from floodsystem.analysis import eval_risk
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
@@ -23,11 +24,6 @@ def test_polyfit():
         polyfit(matplotlib.dates.num2date(x),y,"this is not the correct type")
     assert "variable of wrong type" in str(e)
 
-    # test validation for list length
-    with pytest.raises(ValueError) as e:
-        polyfit(matplotlib.dates.num2date(x),y[1:],2)
-    assert "mismatched list lengths" in str(e)
-
     # test validation for p sign
     with pytest.raises(ValueError) as e:
         polyfit(matplotlib.dates.num2date(x),y,-2)
@@ -46,4 +42,3 @@ def test_cure_levels():
     #create data to be cured
     levels = [0.1, [0.2, 0.3], (0.3, 0.4), 'a']
     assert cure_levels(levels) == [0.1, 0.2, 0.3, 0.0]
-  

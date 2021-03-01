@@ -33,9 +33,7 @@ class MonitoringStation:
         self.typical_range = typical_range
         self.river = river
         self.town = town
-        self.highest_ratio = None
-
-        self.latest_level = None
+        self.highest_ratio = 0
 
     def __repr__(self):
         d = "Station name:     {}\n".format(self.name)
@@ -64,6 +62,10 @@ class MonitoringStation:
         if self.typical_range == None or self.typical_range[0] > self.typical_range[1]:
             return False
         return True
+
+    def set_highest_ratio(self, ratio):
+        """setter for highest ratio"""
+        self.highest_ratio = ratio
 
     # for 2B
     def relative_water_level(self):
