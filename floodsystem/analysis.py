@@ -39,7 +39,12 @@ def polyfit(dates, levels, p):
     levels = cure_levels(levels)
 
     if len(levels) != len(dates):
-        raise ValueError('mismatched list lengths levels={}, dates={}'.format(len(levels),len(dates)))
+        #truncate length of longer list so that polyfit can be done
+        if len(dates) > len(levels):
+            dates = dates[:len(levels)]
+        else:
+            levels = levels[:len(dates)]
+        #raise ValueError('mismatched list lengths levels={}, dates={}'.format(len(levels),len(dates)))
     if p<0:
         raise ValueError('invalid p, p was {}'.format(p))
     
@@ -50,7 +55,7 @@ def polyfit(dates, levels, p):
         raise e
 
 
-def eval_risk(stations, threshholds, n = 3,):
+def eval_risk(stations,  n = 3,):
     """returns 3 lists of stations based on their risk factors
         stations = list of station datas
         thresholds = list of values used to sort stations into risk factors
@@ -60,6 +65,12 @@ def eval_risk(stations, threshholds, n = 3,):
     FutureDt = 3
 
     for stat in stations:
+
+        #checking for invalid stations
+        if stat.typical_range == None:
+            print("station had no typical range, name = {}".format(stat.name))
+            continue
+
         #gets data for time period
         temp = fetch_measure_levels(stat.measure_id, dt=timedelta(days=PastDt))
 

@@ -2,6 +2,7 @@ from floodsystem.stationdata import build_station_list, update_water_levels
 from floodsystem.analysis import eval_risk
 from floodsystem.plot import plot_water_levels_with_fit
 from floodsystem.datafetcher import fetch_measure_levels
+import threading
 
 import datetime
 
@@ -21,13 +22,18 @@ def run():
     for stat in stations:
         try:
             town_stations[towns.index(stat.town)].append(stat)
-            print("goo")
         except:
             towns.append(stat.town)
             town_stations.append([])
             town_stations[len(town_stations)-1].append(stat)
     
-    eval_risk(stations)
+
+    count = 0
+    
+    for i in range(len(towns)):
+        eval_risk(town_stations[i])
+        count += len(town_stations[i])
+        print("{} / {} towns done, {} / {} stations done".format(i, len(towns), count, len(stations)))
             
     
 
