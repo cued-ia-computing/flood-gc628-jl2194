@@ -31,7 +31,7 @@ def polyfit(dates, levels, p):
     p = an int
     """
     #ensure data is of correct type
-    if type(p) != int or type(dates) != list or type(levels) != list:
+    if type(p) != int or type(dates) != list or type(levels) != list or len(dates) == 0:
         raise TypeError('variable of wrong type, p={}, dates={}, levels={}'.format(type(p),type(dates),type(levels)))
 
     if type(dates[0]) != datetime:
@@ -56,13 +56,13 @@ def polyfit(dates, levels, p):
 
 
 def eval_risk(stations,  n = 3):
-    """returns 3 lists of stations based on their risk factors
+    """evaluates the highest expected water levels in the next 2 days of a list of stations
         stations = list of station datas
         thresholds = list of values used to sort stations into risk factors
     """
 
     PastDt = 5
-    FutureDt = 3
+    FutureDt = 2
 
     for stat in stations:
 
@@ -113,4 +113,4 @@ def eval_risk(stations,  n = 3):
         #convert highest level into ratio
         stat.set_highest_ratio((highestLevel - stat.typical_range[0]) / (stat.typical_range[1] - stat.typical_range[0]))
     return
-
+    
